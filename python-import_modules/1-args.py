@@ -1,8 +1,6 @@
 #!/usr/bin/python3
 if __name__ = "__main__":
     import sys
-    for i in range(count):
-        print("{}: {}".formart(i + 1, sys.argv[i + 1]))
 
     count = len(argv)-1
     if count == 0:
@@ -11,3 +9,5 @@ if __name__ = "__main__":
         print("1 argument:")
     else:
         print("{} argument:".format(count))
+    for i in range(count):
+        print("{}: {}".format(i + 1, sys.argv[i + 1]))
