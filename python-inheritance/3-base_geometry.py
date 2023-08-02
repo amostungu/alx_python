@@ -3,6 +3,4 @@
 
 
 class BaseGeometry:
-    """
-    Represent base geometry.
-    """
+    """Represent base geometry."""
