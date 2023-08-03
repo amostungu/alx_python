@@ -5,7 +5,4 @@
 class BaseGeometry:
     """basegeometry class"""
 
-    def __dir__(cls) -> None:
-    """class BaseGeometry"""
-
     pass
