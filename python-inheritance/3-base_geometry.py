@@ -1,14 +1,11 @@
 #!/usr/bin/python3
 """Defines an empty class BaseGeometry."""
 class baseGeo(type):
-    """The type class"""
+    """The custom meta class"""
     def __dir__(cls):
-        """inharitance from type class"""
+        """override dir() method for meta class"""
         return [attribute for attribute in super().__dir__() if attribute != '__init_subclass__']
 
-class BaseGeometry:
-    """basegeometry class"""
+class BaseGeometry(metaclass = baseGeo):
+    """BaseGeometry class with the custom metaclass"""
     pass
-    def __dir__(cls):
-        """class inheritance from type"""
-        return [attribute for attribute in super().__dir__() if attribute !='__init_subclass__']
