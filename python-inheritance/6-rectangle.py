@@ -28,6 +28,10 @@ class BaseGeometry:
             raise TypeError("{} must be an integer".format(name))
         if value <= 0:
             raise ValueError("{} must be positive integer".format(name))
+
+    def __dir__(cls):
+        """Overrides dir() method for the metaclass"""
+        return [attribute for attribute in super().__dir__() if attribute != '__init_subclass__']
 class Rectangle(BaseGeometry, metaclass = baseGeo):
     """class rectangle inheriting from BaseGeometry"""
 
@@ -35,7 +39,3 @@ class Rectangle(BaseGeometry, metaclass = baseGeo):
         """initializing width and height of rectangle"""
          self.__width = super().integer_validator("width", width)
          self.__height = super().integer_validator("height", height)
-
-    def __dir__(cls):
-        """Overrides dir() method for the metaclass"""
-        return [attribute for attribute in super().__dir__() if attribute != '__init_subclass__']
