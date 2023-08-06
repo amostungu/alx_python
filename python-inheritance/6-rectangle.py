@@ -2,19 +2,19 @@
 """Defines a class Rectangle that inherits from BaseGeometry."""
 
 
-class baseGeo(type):
-    """The custom metaclass"""
+"""class baseGeo(type):
+    The custom metaclass
     def __dir__(cls):
-        """Overrides dir() method for the metaclass"""
-        return [attribute for attribute in super().__dir__() if attribute != '__init_subclass__']
+        Overrides dir() method for the metaclass
+        return [attribute for attribute in super().__dir__() if attribute != '__init_subclass__']"""
 
-class BaseGeometry:
-    """BaseGeometry class"""
+"""class BaseGeometry:
+    BaseGeometry class
     def area(self):
-        raise Exception("area() is not implemented")
+        raise Exception("area() is not implemented")"""
 
 
-class Rectangle(BaseGeometry, baseGeo):
+class Rectangle(BaseGeometry(5-base_geometry.py)):
     """Rectangle inheritance"""
 
     def __init__(self, width, height):
@@ -26,11 +26,11 @@ class Rectangle(BaseGeometry, baseGeo):
         self.__width = width
         self.__height = height
 
-    def integer_validator(self, name, value):
-        """integer validator"""
+    """def integer_validator(self, name, value):
+        integer validator
         if not isinstance(value, int) or value <= 0:
-            raise ValueError(f"{name} must be an integer")
+            raise ValueError(f"{name} must be an integer")"""
 
-    def __dir__(cls):
-        """Overrides dir() method for the metaclass"""
-        return [attribute for attribute in super().__dir__() if attribute != '__init_subclass__']
+   """ def __dir__(cls):
+        Overrides dir() method for the metaclass
+        return [attribute for attribute in super().__dir__() if attribute != '__init_subclass__']"""
