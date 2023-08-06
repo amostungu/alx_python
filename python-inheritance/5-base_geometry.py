@@ -1,6 +1,11 @@
 #!/usr/bin/python3
 """Defines a base geometry class BaseGeometry."""
 
+class baseGeo(type):
+    """The custom metaclass"""
+    def __dir__(cls):
+        """Overrides dir() method for the metaclass"""
+        return [attribute for attribute in super().__dir__() if attribute != '__init_subclass__']
 
 class BaseGeometry:
     """Reprsent base geometry."""
@@ -23,3 +28,6 @@ class BaseGeometry:
             raise TypeError("{} must be an integer".format(name))
         if value <= 0:
             raise ValueError("{} must be greater than 0".format(name))
+    def __dir__(cls):
+        """Overrides dir() method for the metaclass"""
+        return [attribute for attribute in super().__dir__() if attribute != '__init_subclass__']
