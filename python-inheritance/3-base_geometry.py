@@ -8,7 +8,7 @@ class baseGeo(type):
 
 class BaseGeometry:
     """basegeometry class"""
+    pass
     def __dir__(cls):
         """class inheritance from type"""
         return [attribute for attribute in super().__dir__() if attribute !='__init_subclass__']
-    pass
