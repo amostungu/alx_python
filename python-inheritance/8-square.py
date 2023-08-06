@@ -1,13 +1,14 @@
 #!/usr/bin/python3
 """Defines a base geometry class BaseGeometry."""
 
+
 class baseGeo(type):
     """The custom metaclass"""
     def __dir__(self):
         """Overrides dir() method for the metaclass"""
         return [attribute for attribute in super().__dir__() if attribute != '__init_subclass__']
 
-class BaseGeometry(metaclass = baseGeo):
+class BaseGeometry(metaclass=baseGeo):
     """Reprsent base geometry."""
 
     def area(self):
@@ -30,6 +31,7 @@ class BaseGeometry(metaclass = baseGeo):
         """Overrides dir() method for the metaclass"""
         return [attribute for attribute in super().__dir__() if attribute != '__init_subclass__']
 
+
 class Rectangle(BaseGeometry):
     """rectangle class"""
 
@@ -45,6 +47,7 @@ class Rectangle(BaseGeometry):
     def area(self):
         """rectangle area"""
         return self.__width * self.__height
+
 
 class Square(Rectangle):
     """Square class"""
