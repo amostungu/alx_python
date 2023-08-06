@@ -13,3 +13,8 @@ class Rectangle(BaseGeometry):
 
         self.__width = super().integer_validator("width", width)
         self.__height = super().integer_validator("height", height)
+
+    def integer_validator(self, name, value):
+        """integrator validator"""
+        if not isinstance(value, int) or value <= 0:
+            raise ValueError(f"{name} must be a positive integer.")
