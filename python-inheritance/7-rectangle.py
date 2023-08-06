@@ -1,8 +1,14 @@
 #!/usr/bin/pyhton3
-"""class BaseGeometry"""
+"""Full Rectangle"""
 
+class baseGeo(type):
+    """The custom metaclass"""
+    def __dir__(cls):
+        """Overrides dir() method for the metaclass"""
+        return [attribute for attribute in super().__dir__() if attribute != '__init_subclass__']
 
-class BaseGeometry:
+class BaseGeometry(metaclass = baseGeo):
+    """Base geometry class"""
     def area(self):
         raise Exception("area() is not implemented")
 
@@ -22,7 +28,13 @@ class Rectangle(BaseGeometry):
             raise ValueError(f"{name} must be a positive integer.")
 
     def area(self):
+        """Area method"""
         return self.__width * self.__height
 
     def __str__(self):
+        """str method"""
         return f"[Rectangle] {self.__width}/{self.__height}"
+    
+    def __dir__(cls):
+        """Overrides dir() method for the metaclass"""
+        return [attribute for attribute in super().__dir__() if attribute != '__init_subclass__']
