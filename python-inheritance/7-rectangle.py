@@ -7,7 +7,7 @@ class baseGeo(type):
         """Overrides dir() method for the metaclass"""
         return [attribute for attribute in super().__dir__() if attribute != '__init_subclass__']
 
-class BaseGeometry(metaclass = baseGeo):
+class BaseGeometry(metaclass=baseGeo):
     """Base geometry class"""
     def area(self):
         raise Exception("area() is not implemented")
@@ -33,8 +33,8 @@ class Rectangle(BaseGeometry):
 
     def __str__(self):
         """str method"""
-        return f"[Rectangle] {self.__width}/{self.__height}"
-    
+        return "[Rectangle] {self.__width}/{self.__height}"
+
     def __dir__(cls):
         """Overrides dir() method for the metaclass"""
         return [attribute for attribute in super().__dir__() if attribute != '__init_subclass__']
