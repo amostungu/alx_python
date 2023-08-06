@@ -29,7 +29,7 @@ class Rectangle(BaseGeometry):
     def integer_validator(self, name, value):
         """integer validator"""
         if not isinstance(value, int) or value <= 0:
-            raise ValueError(f"{name} must be a positive integer.")
+            raise ValueError(f"{name} must be an integer.")
 
     def __dir__(cls):
         """Overrides dir() method for the metaclass"""
