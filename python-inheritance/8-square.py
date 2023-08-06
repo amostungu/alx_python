@@ -30,7 +30,7 @@ class BaseGeometry(metaclass=baseGeo):
 
     def __dir__(self):
         """Overrides dir() method for the metaclass"""
-        return [attribute for attribute in super().__dir__() 
+        return [attribute for attribute in super().__dir__()
                 if attribute != '__init_subclass__']
 
 
