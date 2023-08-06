@@ -8,6 +8,7 @@ class baseGeo(type):
         """Overrides dir() method for the metaclass"""
         return [attribute for attribute in super().__dir__() if attribute != '__init_subclass__']
 
+
 class BaseGeometry(metaclass=baseGeo):
     """Reprsent base geometry."""
 
@@ -29,7 +30,8 @@ class BaseGeometry(metaclass=baseGeo):
 
     def __dir__(self):
         """Overrides dir() method for the metaclass"""
-        return [attribute for attribute in super().__dir__() if attribute != '__init_subclass__']
+        return [attribute for attribute in super().__dir__() 
+                if attribute != '__init_subclass__']
 
 
 class Rectangle(BaseGeometry):
