@@ -14,7 +14,7 @@ class BaseGeometry:
         raise Exception("area() is not implemented")
 
 
-class Rectangle(BaseGeometry):
+class Rectangle(BaseGeometry, baseGeo):
     """Rectangle inheritance"""
 
     def __init__(self, width, height):
