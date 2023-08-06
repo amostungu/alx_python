@@ -33,7 +33,7 @@ class Rectangle(BaseGeometry):
 
     def __str__(self):
         """str method"""
-        return "[Rectangle] {self.__width}/{self.__height}"
+        return "[Rectangle] {}/{}".format(self__width, self.__height)
 
     def __dir__(cls):
         """Overrides dir() method for the metaclass"""
