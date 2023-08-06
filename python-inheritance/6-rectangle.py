@@ -25,8 +25,9 @@ class Rectangle(BaseGeometry(5-base_geometry.py)):
         self.__height = height
 
     def integer_validator(self, name, value):
+        """integer validator"""
         if not isinstance(value, int) or value <= 0:
             raise ValueError(f"{name} must be a positive integer.")
     def __dir__(cls):
         """Overrides dir() method for the metaclass"""
-        return [attribute for attribute in super().__dir__() if attribute != 'init_subclass']
+        return [attribute for attribute in super().__dir__() if attribute != '__init_subclass__']
