@@ -19,16 +19,7 @@ class Rectangle(Base):
     def __init__(self, width, height, x=0, y=0, id=None):
         """Initializes a new Rectangle instance."""
         super().__init__(id)
-
-        if not isinstance(height, int):
-            raise TypeError("height must be an integer")
-        if height <= 0:
-            raise ValueError("height must be > 0")
         self.__width = width
-        if not isinstance(width, int):
-            raise TypeError("width must be an integer")
-        if value <= 0:
-            raise ValueError("width must be > 0")
         self.__height = height
         self.x = x
         self.y = y
@@ -54,6 +45,10 @@ class Rectangle(Base):
         Returns:
             None.
         """
+        if not isinstance(value, int):
+            raise TypeError("width must be an integer")
+        if value <= 0:
+            raise ValueError("width must be > 0")
         self.__width = value
 
     @property
@@ -74,9 +69,14 @@ class Rectangle(Base):
         Args:
             value (int): The desired height value.
 
-        Return:
-            None
+        Raises:
+            TypeError: If value is not an integer.
+            ValueError: If value is less than 0.
         """
+        if not isinstance(value, int):
+            raise TypeError("height must be an integer")
+        if value <= 0:
+            raise ValueError("height must be > 0")
         self.__height = value
    
     @property
