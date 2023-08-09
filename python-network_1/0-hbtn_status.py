@@ -3,7 +3,7 @@
 
 
 import requests
-"""Importing requests"""
+"""Importing requests for fetching data"""
 
 
 url = "https://alu-intranet.hbtn.io/status"
