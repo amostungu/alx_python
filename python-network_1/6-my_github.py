@@ -26,7 +26,7 @@ def get_github_id(username, token):
         response = requests.get(url, auth=auth)
         if response.status_code == 200:
             user_data = response.json()
-            print("GitHub User ID:", user_data.get("id"))
+            print(user_data.get("id"))
         else:
             print(f"Error: {response.status_code}")
     except requests.exceptions.RequestException as e:
