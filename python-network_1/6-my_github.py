@@ -4,8 +4,6 @@
 
 import sys
 """Importing sys Package"""
-import os
-"""Importing OS package"""
 
 import requests
 """Importing request package"""
@@ -22,10 +20,10 @@ def get_github_id(username, token):
         None: Prints the GitHub user ID or an error message.
     """
     url = "https://api.github.com/user"
-    headers = {"Authorization": f"Basic {username}:{token}"}
+    auth = (username, token)
 
     try:
-        response = requests.get(url, headers=headers)
+        response = requests.get(url, auth=auth)
         if response.status_code == 200:
             user_data = response.json()
             print("GitHub User ID:", user_data.get("id"))
