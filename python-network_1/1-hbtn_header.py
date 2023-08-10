@@ -16,10 +16,10 @@ def get_x_request_id(url):
         """Get the value of the X-Request-Id header from the response"""
         if x_request_id:
             """If X-Request-Id header exists in the response, print its value"""
-            print(f"X-Request-Id: {x_request_id}")
+            print(x_request_id)
         else:
             """If X-Request-Id header is not found, print a message"""
-            print("X-Request-Id not found in the response header.")
+            print(None)
     except requests.exceptions.RequestException as e:
         print(f"An error occurred: {e}")
 
