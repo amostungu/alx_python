@@ -3,24 +3,20 @@
 
 
 import requests
-"""Importing requests for fetching data"""
+"""importing request package"""
 
-
+# URL to fetch data from
 url = "https://alu-intranet.hbtn.io/status"
-"""URL to fetch data from"""
 
+# Send a GET request to the URL
 response = requests.get(url)
-"""Send a GET request to the URL"""
 
+# Check if the response status code is 200 (OK)
 if response.status_code == 200:
-    if response.text == "OK":
-        # Display the text content of the response
-        print("Body response:")
-        print("\t- type: str")
-        print("\t- content:", response.text)
-    else:
-        # Display an error message if the response content is unexpected
-        print("Unexpected response content:", response.text)
+    # Display the formatted response body
+    print("Body response:")
+    print("\t- type:", type(response.text))
+    print("\t- content:", response.text)
 else:
     # Display an error message if the status code is not 200
     print(f"Error: {response.status_code}")
