@@ -12,7 +12,8 @@ if __name__ == '__main__':
 
     # It gives us the ability to have multiple seperate working environments
     cur = db.cursor()
-    cur.execute("SELECT * FROM states WHERE name LIKE BINARY 'N%' ORDER BY id ASC")
+    cur.execute("SELECT * FROM states WHERE name
+                 LIKE BINARY 'N%' ORDER BY id ASC")
 
     rows = cur.fetchall()
     for j in rows:
