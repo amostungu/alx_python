@@ -11,5 +11,5 @@ if __name__ == "__main__":
 
     # It gives us the ability to have multiple seperate working environments
     c = db.cursor()
-    c.execute("SELECT * FROM 'states'")
+    c.execute("SELECT * FROM states")
     [print(state) for state in c.fetchall() if state[1] == sys.argv[4]]
