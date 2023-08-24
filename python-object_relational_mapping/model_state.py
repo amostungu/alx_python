@@ -3,7 +3,9 @@
 # Defines a City model.
 
 from sqlalchemy import Column, ForeignKey, Integer, String
+#Importing Column, foreignkey, Integr and String
 from sqlalchemy.ext.declarative import declarative_base
+#importing declarative base
 
 Base = declarative_base()
 
