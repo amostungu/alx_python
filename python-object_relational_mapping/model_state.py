@@ -1,11 +1,11 @@
 #!/usr/bin/python3
-# Inherits from SQLAlchemy Base and links to the MySQL table cities.
-# Defines a City model.
+"""Inherits from SQLAlchemy Base and links to the MySQL table cities."""
+"""Defines a City model."""
 
 from sqlalchemy import Column, ForeignKey, Integer, String
-#Importing Column, foreignkey, Integr and String
+"""Importing Column, foreignkey, Integr and String"""
 from sqlalchemy.ext.declarative import declarative_base
-#importing declarative base
+"""importing declarative base"""
 
 Base = declarative_base()
 
