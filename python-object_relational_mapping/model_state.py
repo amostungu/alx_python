@@ -8,6 +8,7 @@ from sqlalchemy.ext.declarative import declarative_base
 """importing declarative base"""
 
 Base = declarative_base()
+"""declative base"""
 
 
 class City(Base):
