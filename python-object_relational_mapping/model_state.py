@@ -11,5 +11,8 @@ class City(Base):
 
     __tablename__ = "cities"
     id = Column(Integer, primary_key=True, nullable=False, autoincrement=True)
+    """An auto-incrementing primary key for the City table."""
     name = Column(String(128), nullable=False)
+    """The name of the city, limited to 128 characters."""
     state_id = Column(Integer, ForeignKey('states.id'), nullable=False)
+    """A foreign key referencing the id column of the associated state."""
