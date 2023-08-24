@@ -1,12 +1,16 @@
 #!/usr/bin/python3
-"""Class definition of a City"""
+"""
+Class definition of a City
+Inheriting from sqlalchemy
+"""
 
 
 from sqlalchemy import Column, Integer, String, ForeignKey
 """Importing Column, Integer, String and Foreignkey from sqlalchemy"""
 
-from model_state import Base
-"""Importing base from model state"""
+from sqlalchemy.ext.declarative import declarative_base
+
+Base = declarative_base()
 
 class City(Base):
     """City class that inherits from Base"""
