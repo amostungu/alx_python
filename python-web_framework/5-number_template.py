@@ -37,6 +37,7 @@ def show_c_text(text):
 
 # Route /python/<text>
 @app.route('/python/<text>', strict_slashes=False)
+# Route /python
 @app.route('/python/', strict_slashes=False, defaults={'text': 'is cool'})
 def display_python_text(text):
     """ Route handler for /python/<text>"""
