@@ -52,7 +52,7 @@ def display_number(n):
 
 #Route /number_template/<n>.
 @app.route('/number_template/<int: n>', strict_slashes=False)
-def template_number():
+def template_number(n):
     # Route handler for /number_template/<n>.
     return render_template('templates/5-number.html', number=n)
 
