@@ -12,18 +12,18 @@ def get_employee_data(employee_id):
 
     # Fetch employee details
     try:
-        response = requests.get(employee_url)
-        response.raise_for_status()
-        employee_data = response.json()
+        response_employee = requests.get(employee_url)
+        response_employee.raise_for_status()
+        employee_data = response_employee.json()
     except requests.exceptions.RequestException as e:
         print(f"Error fetching employee details: {e}")
         sys.exit(1)
 
     # Fetch TODO list
     try:
-        response = requests.get(todo_url)
-        response.raise_for_status()
-        todo_data = response.json()
+        response_todo = requests.get(todo_url)
+        response_todo.raise_for_status()
+        todo_data = response_todo.json()
     except requests.exceptions.RequestException as e:
         print(f"Error fetching TODO list: {e}")
         sys.exit(1)
