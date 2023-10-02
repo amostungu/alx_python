@@ -36,8 +36,7 @@ def display_todo_progress(employee_data, todo_data):
     total_tasks = len(todo_data)
 
     # Display employee TODO list progress
-    print(f"Employee {employee_name} is done with
-            tasks({len(completed_tasks)}/{total_tasks}):")
+    print(f"Employee {employee_name} is done with tasks({len(completed_tasks)}/{total_tasks}):")
     for task in completed_tasks:
         print(f"\t{task['title']}")
 
@@ -51,6 +50,5 @@ if __name__ == "__main__":
     except ValueError:
         print("Employee ID must be an integer.")
         sys.exit(1)
-
     employee_data, todo_data = get_employee_data(employee_id)
     display_todo_progress(employee_data, todo_data)
