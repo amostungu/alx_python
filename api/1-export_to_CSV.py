@@ -38,10 +38,10 @@ def export_to_csv(employee_data, todo_data):
     # Create a CSV file with the employee ID as the filename
     filename = f"{employee_id}.csv"
     with open(filename, mode="w", newline="") as csv_file:
-        csv_writer = csv.writer(csv_file, quoting=csv.QUOTE_MINIMAL)
+        csv_writer = csv.writer(csv_file, quoting=csv.QUOTE_ALL)
         csv_writer.writerow(["USER_ID", "USERNAME", "TASK_COMPLETED_STATUS", "TASK_TITLE"])
         for task in todo_data:
-            csv_writer.writerow([employee_id, employee_name, task["completed"], task["title"]])
+            csv_writer.writerow([str(employee_id), employee_name, str(task["completed"]), task["title"]])
 
 if __name__ == "__main__":
     if len(sys.argv) != 2:
