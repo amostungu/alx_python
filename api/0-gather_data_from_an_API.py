@@ -3,8 +3,8 @@ import sys
 
 def get_employee_data(employee_id):
     """Defining the API endpoint for employee"""
-    employee_url =  f"https://jsonplaceholder.typicode.com/users/{employee_id}"
-    todo_url = f"https://jsonplaceholder.typicode.com/users/{employee_id}/todos"
+    employee_url =  f"https://jsonplaceholder.typicode.com/users/1"
+    todo_url = f"https://jsonplaceholder.typicode.com/users/1/todos"
 
     try:
         #Getting the employee details
