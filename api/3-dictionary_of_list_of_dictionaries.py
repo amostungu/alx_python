@@ -1,74 +1,80 @@
 #!/usr/bin/python3
 """
 Write a Python script that, using this REST API,
-for all employees, returns information about
-their TODO list progress and exports it in JSON format.
+for a given employee ID, returns information about
+his/her TODO list progress
 """
 
+import json
 import requests
 import sys
 
-def get_all_employee_data():
+def get_employee_data(employee_id):
     # Define the base URL for the JSONPlaceholder API
     base_url = "https://jsonplaceholder.typicode.com"
 
-    # Fetch all users
-    users_url = f"{base_url}/users"
+    # Construct the URLs for employee details and TODO list
+    employee_url = f"{base_url}/users/{employee_id}"
+    todo_url = f"{base_url}/users/{employee_id}/todos"
+
+    # Fetch employee details
     try:
-        response = requests.get(users_url)
+        response = requests.get(employee_url)
         response.raise_for_status()
-        all_users = response.json()
+        employee_data = response.json()
     except requests.exceptions.RequestException as e:
-        print(f"Error fetching user data: {e}")
+        print(f"Error fetching employee details: {e}")
         sys.exit(1)
 
-    # Initialize a dictionary to store tasks for all users
-    all_tasks = {}
+    # Fetch TODO list
+    try:
+        response = requests.get(todo_url)
+        response.raise_for_status()
+        todo_data = response.json()
+    except requests.exceptions.RequestException as e:        
+        print(f"Error fetching TODO list: {e}")
+        sys.exit(1)
 
-    for user in all_users:
-        user_id = user["id"]
-        username = user["username"]
+    return employee_data, todo_data
 
-        # Construct the URL for the TODO list of the current user
-        todo_url = f"{base_url}/users/{user_id}/todos"
+def export_todo_data(todo_data):
+    employee_todo_dict = {}
+    for task in todo_data:
+        user_id = task["userId"]
+        if user_id not in employee_todo_dict:
+            employee_todo_dict[user_id] = []
+        
+        employee_todo_dict[user_id].append({
+            "username": task["title"],
+            "task": task["title"],
+            "completed": task["completed"]
+        })
 
-        # Fetch TODO list for the current user
-        try:
-            response = requests.get(todo_url)
-            response.raise_for_status()
-            todo_data = response.json()
-        except requests.exceptions.RequestException as e:
-            print(f"Error fetching TODO list for user {user_id}: {e}")
-            continue
+    with open("todo_all_employees.json", "w") as json_file:
+        json.dump(employee_todo_dict, json_file, indent=4)
 
-        # Extract relevant information and organize tasks
-        user_tasks = [{"username": username, "task": task["title"], "completed": task["completed"]} for task in todo_data]
+def display_todo_progress(employee_data, todo_data):
+    # Extract relevant information
+    employee_name = employee_data.get("name")
+    completed_tasks = [task for task in todo_data if task["completed"]]
+    total_tasks = len(todo_data)
 
-        # Store tasks in the dictionary
-        all_tasks[user_id] = user_tasks
-
-    return all_tasks
+    # Display employee TODO list progress
+    print(f"Employee {employee_name} is done with tasks({len(completed_tasks)}/{total_tasks}):")
+    for task in completed_tasks:
+        print(f"\t {task['title']}")
 
 if __name__ == "__main__":
-    # Fetch and organize tasks for all employees
-    all_employee_tasks = get_all_employee_data()
+    if len(sys.argv) != 2:
+        print("Usage: python gather_data_from_an_API.py <employee_id>")
+        sys.exit(1)
 
-    # Export tasks to JSON file
-    with open("todo_all_employees.json", "w") as json_file:
-        json_file.write(str(all_employee_tasks))
+    try:
+        employee_id = int(sys.argv[1])
+    except ValueError:
+        print("Employee ID must be an integer.")
+        sys.exit(1)
 
-    # Check if all users exist in the JSON output
-    all_users_exist = all(user["id"] in all_employee_tasks for user in all_users)
-
-    if all_users_exist:
-        print("All users found: OK")
-    else:
-        print("Not all users found in the JSON output")
-
-    # Check if all tasks are correctly assigned to the user IDs
-    user_tasks_correct = all(len(tasks) == len(all_employee_tasks[user["id"]]) for user in all_users)
-
-    if user_tasks_correct:
-        print("User ID and Tasks output: OK")
-    else:
-        print("Tasks are not correctly assigned to the user IDs")
+    employee_data, todo_data = get_employee_data(employee_id)
+    display_todo_progress(employee_data, todo_data)
+    export_todo_data(todo_data)
