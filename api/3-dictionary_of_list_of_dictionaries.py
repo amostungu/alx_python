@@ -56,4 +56,10 @@ if __name__ == "__main__":
     with open("todo_all_employees.json", "w") as json_file:
         json_file.write(str(all_employee_tasks))
 
-    #print("Tasks for all employees have been exported to todo_all_employees.json")
+    # Check if all users exist in the JSON output
+    all_users_exist = all(user["id"] in all_employee_tasks for user in all_users)
+
+    if all_users_exist:
+        print("All users found: OK")
+    else:
+        print("Not all users found in the JSON output")
