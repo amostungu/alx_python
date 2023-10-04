@@ -1,7 +1,7 @@
 #!/usr/bin/python3
 """
-Using what you did in the task #0, extend your
-Python script to export data in the CSV format.
+Using what you did in the task #0, extend your Python
+script to export data in the CSV format.
 """
 
 import csv
@@ -30,33 +30,39 @@ def get_employee_data(employee_id):
         response = requests.get(todo_url)
         response.raise_for_status()
         todo_data = response.json()
-    except requests.exceptions.RequestException as e:        
+    except requests.exceptions.RequestException as e:
         print(f"Error fetching TODO list: {e}")
         sys.exit(1)
 
     return employee_data, todo_data
 
-def display_todo_progress(employee_data, todo_data):
-    # Extract relevant information
-    employee_id = employee_data.get("id")
-    employee_name = employee_data.get("name")
-    completed_tasks = [task for task in todo_data if task["completed"]]
-
-    # Create a CSV file and write the data
+def export_to_csv(employee_id, employee_name, todo_data):
+    # Define the CSV file name
     csv_filename = f"{employee_id}.csv"
-    with open(csv_filename, mode='w', newline='') as csv_file:
-        csv_writer = csv.writer(csv_file)
-        # Write the header row
-        csv_writer.writerow(["USER_ID", "USERNAME", "TASK_COMPLETED_STATUS", "TASK_TITLE"])
-        # Write task data
-        for task in completed_tasks:
-            csv_writer.writerow([employee_id, employee_name, str(task["completed"]), task["title"]])
 
-    print(f"Data exported to {csv_filename}")
+    # Write tasks to CSV file
+    with open(csv_filename, mode='w', newline='') as file:
+        writer = csv.writer(file, delimiter=',', quotechar='"', quoting=csv.QUOTE_MINIMAL)
+
+        # Write header row
+        writer.writerow(["USER_ID", "USERNAME", "TASK_COMPLETED_STATUS", "TASK_TITLE"])
+
+        # Write tasks
+        for task in todo_data:
+            writer.writerow([employee_id, employee_name, task["completed"], task["title"]])
+
+def display_todo_progress(employee_name, todo_data):
+    completed_tasks = [task for task in todo_data if task["completed"]]
+    total_tasks = len(todo_data)
+
+    # Display employee TODO list progress
+    print(f"Employee {employee_name} is done with tasks({len(completed_tasks)}/{total_tasks}):")
+    for task in completed_tasks:
+        print(f"\t{task['title']}")
 
 if __name__ == "__main__":
     if len(sys.argv) != 2:
-        print("Usage: python gather_data_from_an_API.py <employee_id>")
+        print("Usage: python gather_data_and_export.py <employee_id>")
         sys.exit(1)
 
     try:
@@ -66,4 +72,7 @@ if __name__ == "__main__":
         sys.exit(1)
 
     employee_data, todo_data = get_employee_data(employee_id)
-    display_todo_progress(employee_data, todo_data)
+    employee_name = employee_data.get("name")
+    
+    export_to_csv(employee_id, employee_name, todo_data)
+    display_todo_progress(employee_name, todo_data)
