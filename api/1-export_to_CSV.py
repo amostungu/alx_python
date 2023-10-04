@@ -5,7 +5,7 @@ for a given employee ID, returns information about
 his/her TODO list progress and exports it in CSV format.
 """
 
-import pandas
+import pandas as pd
 import requests
 import sys
 
