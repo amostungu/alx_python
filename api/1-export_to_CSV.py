@@ -1,59 +1,73 @@
 #!/usr/bin/python3
 """
-Check student .CSV output of user information and export tasks in CSV format
+Write a Python script that, using this REST API,
+for a given employee ID, returns information about
+his/her TODO list progress and exports it in CSV format.
 """
 
-import csv
+import pandas
 import requests
 import sys
 
-users_url = "https://jsonplaceholder.typicode.com/users?id="
-todos_url = "https://jsonplaceholder.typicode.com/todos"
+def get_employee_data(employee_id):
+    # Define the base URL for the JSONPlaceholder API
+    base_url = "https://jsonplaceholder.typicode.com"
 
+    # Construct the URLs for employee details and TODO list
+    employee_url = f"{base_url}/users/{employee_id}"
+    todo_url = f"{base_url}/users/{employee_id}/todos"
 
-def export_tasks_to_csv(id, tasks):
-    """ Export tasks to CSV format """
-    filename = f"{id}.csv"
+    # Fetch employee details
+    try:
+        response = requests.get(employee_url)
+        response.raise_for_status()
+        employee_data = response.json()
+    except requests.exceptions.RequestException as e:
+        print(f"Error fetching employee details: {e}")
+        sys.exit(1)
 
-    with open(filename, 'w', newline='') as csvfile:
-        fieldnames = ["USER_ID", "USERNAME", "TASK_COMPLETED_STATUS", "TASK_TITLE"]
-        writer = csv.DictWriter(csvfile, fieldnames=fieldnames)
+    # Fetch TODO list
+    try:
+        response = requests.get(todo_url)
+        response.raise_for_status()
+        todo_data = response.json()
+    except requests.exceptions.RequestException as e:        
+        print(f"Error fetching TODO list: {e}")
+        sys.exit(1)
 
-        writer.writeheader()  # Write CSV header
+    return employee_data, todo_data
 
-        for task in tasks:
-            # Retrieve the username for the given user ID from the API
-            response = requests.get(users_url + str(id)).json()
-            username = response[0]['username']
+def export_to_csv(employee_data, todo_data):
+    # Extract relevant information
+    user_id = employee_data.get("id")
+    username = employee_data.get("username")
 
-            # Write task data to CSV
-            writer.writerow({
-                "USER_ID": id,
-                "USERNAME": username,
-                "TASK_COMPLETED_STATUS": str(task['completed']),
-                "TASK_TITLE": task['title']
-            })
+    # Create a DataFrame for the TODO list
+    todo_df = pd.DataFrame(todo_data)
 
-    print(f"Tasks exported to {filename}")
+    # Select relevant columns and add user-specific data
+    todo_df = todo_df[["completed", "title"]]
+    todo_df["user_id"] = user_id
+    todo_df["username"] = username
 
+    # Rename columns
+    todo_df = todo_df.rename(columns={"completed": "TASK_COMPLETED_STATUS", "title": "TASK_TITLE"})
 
-def user_info(id):
-    """ Check user information and export tasks to CSV """
-
-    # Fetch tasks for the given user ID from the API
-    tasks = [task for task in requests.get(todos_url).json() if task['userId'] == id]
-
-    # Export tasks to CSV
-    export_tasks_to_csv(id, tasks)
-
+    # Save to CSV
+    csv_filename = f"{user_id}.csv"
+    todo_df.to_csv(csv_filename, index=False)
+    print(f"Data exported to {csv_filename}")
 
 if __name__ == "__main__":
     if len(sys.argv) != 2:
-        print("Usage: python check_student_output.py <employee_id>")
+        print("Usage: python gather_data_from_an_API.py <employee_id>")
         sys.exit(1)
 
     try:
-        user_info(int(sys.argv[1]))
+        employee_id = int(sys.argv[1])
     except ValueError:
         print("Employee ID must be an integer.")
         sys.exit(1)
+
+    employee_data, todo_data = get_employee_data(employee_id)
+    export_to_csv(employee_data, todo_data)
