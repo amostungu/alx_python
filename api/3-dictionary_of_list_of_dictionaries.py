@@ -1,7 +1,8 @@
 #!/usr/bin/python3
 """
-Using what you did in the task #0, extend your
-Python script to export data in the JSON format.
+Write a Python script that, using this REST API,
+for all employees, returns information about
+their TODO list progress and exports it in JSON format.
 """
 
 import requests
@@ -63,3 +64,11 @@ if __name__ == "__main__":
         print("All users found: OK")
     else:
         print("Not all users found in the JSON output")
+
+    # Check if all tasks are correctly assigned to the user IDs
+    user_tasks_correct = all(len(tasks) == len(all_employee_tasks[user["id"]]) for user in all_users)
+
+    if user_tasks_correct:
+        print("User ID and Tasks output: OK")
+    else:
+        print("Tasks are not correctly assigned to the user IDs")
