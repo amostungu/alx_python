@@ -45,7 +45,7 @@ def display_todo_progress(employee_data, todo_data):
     # Display employee TODO list progress
     print(f"Employee {employee_name} is done with tasks({len(completed_tasks)}/{total_tasks}):")
     for task in completed_tasks:
-        print(f"\t{task['title']}")
+        print(f"\t {task['title']}")
 
 if __name__ == "__main__":
     if len(sys.argv) != 2:
