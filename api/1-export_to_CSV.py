@@ -1,6 +1,12 @@
+#!/usr/bin/python3
+"""
+Using what you did in the task #0, extend your
+Python script to export data in the CSV format.
+"""
+
 import requests
-import sys
 import csv
+import sys
 
 def get_employee_data(employee_id):
     # Define the base URL for the JSONPlaceholder API
@@ -24,28 +30,33 @@ def get_employee_data(employee_id):
         response = requests.get(todo_url)
         response.raise_for_status()
         todo_data = response.json()
-    except requests.exceptions.RequestException as e:
+    except requests.exceptions.RequestException as e:        
         print(f"Error fetching TODO list: {e}")
         sys.exit(1)
 
     return employee_data, todo_data
 
-def export_to_csv(employee_data, todo_data):
+def display_todo_progress(employee_data, todo_data):
     # Extract relevant information
-    employee_id = employee_data["id"]
-    employee_name = employee_data["username"]
+    employee_id = employee_data.get("id")
+    employee_name = employee_data.get("name")
+    completed_tasks = [task for task in todo_data if task["completed"]]
 
-    # Create a CSV file with the employee ID as the filename
-    filename = f"{employee_id}.csv"
-    with open(filename, mode="w", newline="") as csv_file:
-        csv_writer = csv.writer(csv_file, quoting=csv.QUOTE_ALL)  # Quote all fields
+    # Create a CSV file and write the data
+    csv_filename = f"{employee_id}.csv"
+    with open(csv_filename, mode='w', newline='') as csv_file:
+        csv_writer = csv.writer(csv_file)
+        # Write the header row
         csv_writer.writerow(["USER_ID", "USERNAME", "TASK_COMPLETED_STATUS", "TASK_TITLE"])
-        for task in todo_data:
-            csv_writer.writerow([str(employee_id), employee_name, str(task["completed"]), task["title"]])
+        # Write task data
+        for task in completed_tasks:
+            csv_writer.writerow([employee_id, employee_name, str(task["completed"]), task["title"]])
+
+    print(f"Data exported to {csv_filename}")
 
 if __name__ == "__main__":
     if len(sys.argv) != 2:
-        print("Usage: python export_to_CSV.py <employee_id>")
+        print("Usage: python gather_data_from_an_API.py <employee_id>")
         sys.exit(1)
 
     try:
@@ -55,4 +66,4 @@ if __name__ == "__main__":
         sys.exit(1)
 
     employee_data, todo_data = get_employee_data(employee_id)
-    export_to_csv(employee_data, todo_data)
+    display_todo_progress(employee_data, todo_data)
