@@ -1,7 +1,8 @@
 #!/usr/bin/python3
 """
-Using what you did in the task #0, extend your Python
-script to export data in the CSV format.
+Write a Python script that, using this REST API,
+for a given employee ID, returns information about
+his/her TODO list progress and exports it in CSV format.
 """
 
 import csv
@@ -60,6 +61,24 @@ def display_todo_progress(employee_name, todo_data):
     for task in completed_tasks:
         print(f"\t{task['title']}")
 
+def check_number_of_tasks_in_csv(employee_id, todo_data):
+    csv_filename = f"{employee_id}.csv"
+
+    # Count the total number of tasks
+    total_tasks = len(todo_data)
+
+    # Count the number of lines in the CSV file
+    num_lines = 0
+    with open(csv_filename, 'r') as f:
+        for line in f:
+            if not line == '\n':
+                num_lines += 1
+
+    if total_tasks == num_lines:
+        print("Number of tasks in CSV: OK")
+    else:
+        print("Number of tasks in CSV: Incorrect")
+
 if __name__ == "__main__":
     if len(sys.argv) != 2:
         print("Usage: python gather_data_and_export.py <employee_id>")
@@ -76,3 +95,4 @@ if __name__ == "__main__":
     
     export_to_csv(employee_id, employee_name, todo_data)
     display_todo_progress(employee_name, todo_data)
+    check_number_of_tasks_in_csv(employee_id, todo_data)
